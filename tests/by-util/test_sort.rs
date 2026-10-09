@@ -628,6 +628,16 @@ fn test_dictionary_order2() {
 }
 
 #[test]
+fn test_dictionary_order_ignores_non_blank_whitespace() {
+    // Only blanks (space and tab) and alphanumerics are significant with -d.
+    new_ucmd!()
+        .arg("-d")
+        .pipe_in("a\rb\na\x0bc\na\x0cd\naab\n") // spell-checker:disable-line
+        .succeeds()
+        .stdout_is("aab\na\rb\na\x0bc\na\x0cd\n");
+}
+
+#[test]
 fn test_non_printing_chars() {
     new_ucmd!()
         .pipe_in("a👦🏻aa\naaaa") // spell-checker:disable-line
