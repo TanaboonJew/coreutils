@@ -10,7 +10,7 @@
 use std::cmp::Ordering;
 
 fn filter_char(c: u8, ignore_non_printing: bool, ignore_non_dictionary: bool) -> bool {
-    if ignore_non_dictionary && !(c.is_ascii_alphanumeric() || c.is_ascii_whitespace()) {
+    if ignore_non_dictionary && !(c.is_ascii_alphanumeric() || matches!(c, b' ' | b'\t')) {
         return false;
     }
     !(ignore_non_printing && (c.is_ascii_control() || !c.is_ascii()))
